@@ -1,20 +1,10 @@
 # Streamlit Punk News
 
-This project is a Streamlit application that fetches and displays the latest punk rock news from Google's News RSS feed. It provides a simple and interactive interface for users to stay updated on punk rock music and culture.
+This project is a Streamlit application that fetches and displays the latest digital solutions news from Google's News RSS feed for product managers. It provides a simple and interactive interface for users to stay updated on specific areas of digital solutions
 
 ## Project Structure
 
-```
-streamlit-punk-news
-├── src
-│   ├── app.py            # Main entry point of the Streamlit application
-│   ├── fetcher.py        # Functions to fetch and parse punk rock news from RSS feed
-│   └── components
-│       └── news_card.py  # Component for displaying individual news articles
-├── requirements.txt      # Python dependencies for the project
-├── .gitignore            # Files and directories to be ignored by Git
-└── README.md             # Documentation for the project
-```
+
 
 ## Setup Instructions
 
