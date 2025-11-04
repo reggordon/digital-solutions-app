@@ -38,8 +38,8 @@ else
 fi
 
 if [ "$NEED_INSTALL" -eq 1 ]; then
-  $PIP install --upgrade pip
-  $PIP install -r requirements.txt
+  $PIP install --upgrade --disable-pip-version-check pip
+  $PIP install --disable-pip-version-check -r requirements.txt
   # Save the current requirements hash so we can skip future installs
   shasum -a 1 requirements.txt | awk '{print $1}' > "$REQ_HASH_FILE"
 else

@@ -28,14 +28,27 @@ def fetch_digital_solutions(fetch_images: bool = False, query: Optional[str] = N
         hl, gl, ceid = region_map['Global']
 
     url = f"https://news.google.com/rss/search?q={q}&hl={hl}&gl={gl}&ceid={ceid}"
-    try:
-        response = requests.get(url, timeout=10, headers={
-            "User-Agent": "Mozilla/5.0 (compatible; punk-news-fetcher/1.0)"
-        })
-    except Exception:
-        return []
 
-    if response.status_code != 200:
+    # Faster, resilient fetch: short connect/read timeouts and a quick retry
+    headers = {
+        "User-Agent": "Mozilla/5.0 (compatible; digital-solutions-app/1.0)",
+        "Accept": "application/rss+xml, application/xml;q=0.9, */*;q=0.8",
+    }
+
+    response = None
+    for attempt in range(2):  # one retry on timeout/network hiccup
+        try:
+            response = requests.get(url, timeout=(3, 6), headers=headers)
+            break
+        except requests.Timeout:
+            if attempt == 0:
+                time.sleep(0.3)
+                continue
+            return []
+        except requests.RequestException:
+            return []
+
+    if response is None or response.status_code != 200:
         return []
 
     feed = feedparser.parse(response.content)
